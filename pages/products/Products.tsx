@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useCallback } from 'react';
 import PageWrapper from '../../components/layout/PageWrapper';
 import { Card } from '../../components/ui/Card';
@@ -157,7 +156,8 @@ const Products: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="overflow-x-auto">
+                {/* Desktop Table View */}
+                <div className="overflow-x-auto hidden md:block">
                     <table className="w-full text-left">
                         <thead>
                             <tr className="border-b border-white/20">
@@ -191,6 +191,30 @@ const Products: React.FC = () => {
                             ))}
                         </tbody>
                     </table>
+                </div>
+                
+                {/* Mobile Card View */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
+                    {sortedProducts.map((product) => (
+                        <div key={product.id} className="p-4 rounded-lg bg-white/5 border border-white/10 flex flex-col justify-between">
+                            <div>
+                                <div className="flex justify-between items-start">
+                                    <h3 className="font-bold text-lg text-white">{product.name}</h3>
+                                    <div className="flex gap-1 -mr-2">
+                                        <Button variant="ghost" className="p-2" onClick={() => handleEditProduct(product)}><Icon name="edit" className="w-4 h-4"/></Button>
+                                        <Button variant="ghost" className="p-2 text-red-400 hover:text-red-400" onClick={() => deleteProduct(product.id)}><Icon name="delete" className="w-4 h-4"/></Button>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-gray-400">{product.category}</p>
+                                <div className="mt-4 space-y-2 text-sm">
+                                    <div className="flex justify-between"><span className="text-gray-400">Quantity:</span> <span className="font-medium">{product.quantity}</span></div>
+                                    <div className="flex justify-between"><span className="text-gray-400">Price:</span> <span className="font-medium">${product.price.toFixed(2)}</span></div>
+                                    <div className="flex justify-between"><span className="text-gray-400">Supplier:</span> <span className="font-medium">{product.supplier}</span></div>
+                                    <div className="flex justify-between"><span className="text-gray-400">Updated:</span> <span className="font-medium">{product.lastUpdated}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </Card>
 
